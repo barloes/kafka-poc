@@ -6,7 +6,8 @@ services:
       - '39092:1000'   
     environment:
       - KAFKA_KRAFT_CLUSTER_ID=MDEyMzQ1Njc4OTEyMzQ2Cg
-      - KAFKA_BROKER_ID=1
+      - NODE_ID_COMMAND=1
+      - KAFKA_CFG_NODE_ID=1
       - KAFKA_ENABLE_KRAFT=yes
       - KAFKA_CFG_PROCESS_ROLES=broker,controller
       - KAFKA_CFG_CONTROLLER_LISTENER_NAMES=CONTROLLER
@@ -21,7 +22,8 @@ services:
       - '29092:1000'   
     environment:
       - KAFKA_KRAFT_CLUSTER_ID=MDEyMzQ1Njc4OTEyMzQ2Cg
-      - KAFKA_BROKER_ID=2
+      - KAFKA_CFG_NODE_ID=2
+      - NODE_ID_COMMAND=2
       - KAFKA_ENABLE_KRAFT=yes
       - KAFKA_CFG_PROCESS_ROLES=broker,controller
       - KAFKA_CFG_CONTROLLER_LISTENER_NAMES=CONTROLLER
@@ -30,3 +32,16 @@ services:
       - KAFKA_CFG_ADVERTISED_LISTENERS=HOST://localhost:29092,PLAINTEXT://kafka-2:9092
       - KAFKA_CFG_CONTROLLER_QUORUM_VOTERS=1@kafka-1:9093,2@kafka-2:9093
       - ALLOW_PLAINTEXT_LISTENER=yes
+  kafdrop:
+    image: obsidiandynamics/kafdrop:3.31.0
+    ports:
+      - "9001:9000"
+    environment:
+      KAFKA_BROKERCONNECT: kafka-1:9092,kafka-2:9092
+      JVM_OPTS: -Xms32M -Xmx64M
+    depends_on:
+      - kafka-1
+      - kafka-2
+
+# networks:
+#   kafka_default:
