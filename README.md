@@ -58,6 +58,12 @@ kafka-console-consumer --topic quickstart-events --from-beginning --bootstrap-se
 /opt/bitnami/kafka/bin
 ```
 
+# Connecting to local environment from docker
+
+```
+jdbc:mysql://host.docker.internal:3306/jaas?useUnicode=true&characterEncoding=utf8"
+```
+
 Reference
 - https://github.com/ueisele/kafka-images/blob/main/examples/kraft/cluster-shared-mode/docker-compose.yaml
 - https://docs.docker.com/compose/install/linux/

@@ -1,13 +1,14 @@
 version: "3.9"
 services:
   kafka-1:
-    image: 'bitnami/kafka:3.3-debian-11'    
+    image: 'bitnami/kafka:3.4.0-debian-11-r21'    
     ports:
       - '39092:1000'   
     environment:
       - KAFKA_KRAFT_CLUSTER_ID=MDEyMzQ1Njc4OTEyMzQ2Cg
       - NODE_ID_COMMAND=1
       - KAFKA_CFG_NODE_ID=1
+      - KAFKA_CFG_BROKER_ID=1
       - KAFKA_ENABLE_KRAFT=yes
       - KAFKA_CFG_PROCESS_ROLES=broker,controller
       - KAFKA_CFG_CONTROLLER_LISTENER_NAMES=CONTROLLER
@@ -17,13 +18,14 @@ services:
       - KAFKA_CFG_CONTROLLER_QUORUM_VOTERS=1@kafka-1:9093,2@kafka-2:9093
       - ALLOW_PLAINTEXT_LISTENER=yes
   kafka-2:
-    image: 'bitnami/kafka:3.3-debian-11'    
+    image: 'bitnami/kafka:3.4.0-debian-11-r21'    
     ports:
       - '29092:1000'   
     environment:
       - KAFKA_KRAFT_CLUSTER_ID=MDEyMzQ1Njc4OTEyMzQ2Cg
       - KAFKA_CFG_NODE_ID=2
       - NODE_ID_COMMAND=2
+      - KAFKA_CFG_BROKER_ID=2
       - KAFKA_ENABLE_KRAFT=yes
       - KAFKA_CFG_PROCESS_ROLES=broker,controller
       - KAFKA_CFG_CONTROLLER_LISTENER_NAMES=CONTROLLER
@@ -42,6 +44,5 @@ services:
     depends_on:
       - kafka-1
       - kafka-2
-
-# networks:
-#   kafka_default:
+networks:
+  kafka_default:

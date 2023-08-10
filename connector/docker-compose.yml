@@ -7,7 +7,7 @@ services:
       context: .
       dockerfile: Dockerfile
     volumes:
-      - ./conf:/etc/kafka/conf
+      - ./connectors:/etc/kafka-connect/jars
     environment:
       CONNECT_BOOTSTRAP_SERVERS: "kafka-1:9092,kafka-2:9092"
       CONNECT_REST_PORT: 8083
@@ -28,6 +28,14 @@ services:
     networks:
       - kafka_default
 
+  kafka-connect-ui:
+    image: landoop/kafka-connect-ui
+    ports:
+      - "8000:8000"
+    environment:
+      CONNECT_URL: "http://kafka-connect:8083"
+    networks:
+      - kafka_default
 networks:
   kafka_default:
     external: true
