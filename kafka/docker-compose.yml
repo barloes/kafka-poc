@@ -1,9 +1,9 @@
 version: "3.9"
 services:
   kafka-1:
-    image: 'bitnami/kafka:3.4.0-debian-11-r21'    
+    image: 'bitnami/kafka:3.4.0-debian-11-r21'
     ports:
-      - '39092:1000'   
+      - '39092:1000'
     environment:
       - KAFKA_KRAFT_CLUSTER_ID=MDEyMzQ1Njc4OTEyMzQ2Cg
       - NODE_ID_COMMAND=1
@@ -18,9 +18,9 @@ services:
       - KAFKA_CFG_CONTROLLER_QUORUM_VOTERS=1@kafka-1:9093,2@kafka-2:9093
       - ALLOW_PLAINTEXT_LISTENER=yes
   kafka-2:
-    image: 'bitnami/kafka:3.4.0-debian-11-r21'    
+    image: 'bitnami/kafka:3.4.0-debian-11-r21'
     ports:
-      - '29092:1000'   
+      - '29092:1000'
     environment:
       - KAFKA_KRAFT_CLUSTER_ID=MDEyMzQ1Njc4OTEyMzQ2Cg
       - KAFKA_CFG_NODE_ID=2
